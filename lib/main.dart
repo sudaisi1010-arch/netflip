@@ -446,4 +446,29 @@ class SettingsScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.dark_mode_outlined, color: Colors.white),
-            title: const Text('Dark Mode & Theme', style: TextStyle(color: Colo
+            title: const Text('Dark Mode & Theme', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+          const Divider(color: Colors.white12),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text('Support & About', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 13)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.help_outline_rounded, color: Colors.white),
+            title: const Text('Help Center', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.info_outline_rounded, color: Colors.white),
+            title: const Text('About NetFlip', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
