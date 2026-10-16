@@ -828,4 +828,4 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
-}
+
