@@ -25,13 +25,17 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Find Project and Build APK
+      - name: Recreate Android Native Files & Build APK
         run: |
-          # Find directory containing pubspec.yaml automatically
+          # Find project root
           PUBSPEC_PATH=$(find . -name "pubspec.yaml" | head -n 1)
           PROJECT_DIR=$(dirname "$PUBSPEC_PATH")
-          echo "Found Flutter project at: $PROJECT_DIR"
           cd "$PROJECT_DIR"
+          
+          # Auto-generate missing android platform files
+          flutter create . --platforms=android
+          
+          # Fetch dependencies and build
           flutter pub get
           flutter build apk --release
 
