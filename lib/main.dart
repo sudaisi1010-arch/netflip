@@ -80,7 +80,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 }
 
-// HOME SCREEN WITH TOP NAVIGATION & STORY TRAY
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -233,7 +232,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// HUB / PROFILE SCREEN WITH ASSETS & SETTINGS MENU
 class HubScreen extends StatelessWidget {
   const HubScreen({super.key});
 
@@ -268,7 +266,6 @@ class HubScreen extends StatelessWidget {
                 onTap: () => Navigator.pop(context),
               ),
               const Divider(color: Colors.white12),
-
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text('Personal tools', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
@@ -286,7 +283,6 @@ class HubScreen extends StatelessWidget {
                 onTap: () => Navigator.pop(context),
               ),
               const Divider(color: Colors.white12),
-
               ListTile(
                 leading: const Icon(Icons.video_settings_rounded, color: Colors.deepPurpleAccent),
                 title: const Text('NetFlip Studio', style: TextStyle(color: Colors.white)),
@@ -408,7 +404,6 @@ class _StatItem extends StatelessWidget {
   }
 }
 
-// FULL SETTINGS AND PRIVACY SCREEN
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -450,4 +445,5 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-            leading: cons
+            leading: const Icon(Icons.dark_mode_outlined, color: Colors.white),
+            title: const Text('Dark Mode & Theme', style: TextStyle(color: Colors.w
