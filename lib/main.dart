@@ -35,7 +35,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const Center(child: Text('Explore (Pulse & Gallery)', style: TextStyle(color: Colors.white, fontSize: 16))),
     const Center(child: Text('Create Post / Upload Video', style: TextStyle(color: Colors.white, fontSize: 16))),
     const Center(child: Text('Inbox & Notifications', style: TextStyle(color: Colors.white, fontSize: 16))),
-    const HubScreen(), // Updated Hub Profile Screen with Settings & Assets Menu
+    const HubScreen(),
   ];
 
   @override
@@ -251,7 +251,6 @@ class HubScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAlignment.start,
             children: [
-              // Assets Section
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text('Assets', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
@@ -260,21 +259,16 @@ class HubScreen extends StatelessWidget {
                 leading: const Icon(Icons.account_balance_wallet_rounded, color: Colors.white),
                 title: const Text('Balance & Earnings', style: TextStyle(color: Colors.white)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
               ),
               ListTile(
                 leading: const Icon(Icons.star_rounded, color: Colors.amber),
                 title: const Text('NetFlip VIP Status', style: TextStyle(color: Colors.white)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
               ),
               const Divider(color: Colors.white12),
 
-              // Personal Tools Section
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text('Personal tools', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
@@ -283,28 +277,21 @@ class HubScreen extends StatelessWidget {
                 leading: const Icon(Icons.download_rounded, color: Colors.white),
                 title: const Text('Offline Videos', style: TextStyle(color: Colors.white)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
               ),
               ListTile(
                 leading: const Icon(Icons.qr_code_2_rounded, color: Colors.white),
                 title: const Text('Your QR Code', style: TextStyle(color: Colors.white)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
               ),
               const Divider(color: Colors.white12),
 
-              // Creation & Settings
               ListTile(
                 leading: const Icon(Icons.video_settings_rounded, color: Colors.deepPurpleAccent),
                 title: const Text('NetFlip Studio', style: TextStyle(color: Colors.white)),
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => Navigator.pop(context),
               ),
               ListTile(
                 leading: const Icon(Icons.settings_rounded, color: Colors.white),
@@ -312,6 +299,10 @@ class HubScreen extends StatelessWidget {
                 trailing: const Icon(Icons.chevron_right, color: Colors.grey),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  );
                 },
               ),
             ],
@@ -338,7 +329,6 @@ class HubScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 16),
-          // Profile Avatar & Handle
           const CircleAvatar(
             radius: 45,
             backgroundColor: Colors.deepPurpleAccent,
@@ -350,7 +340,6 @@ class HubScreen extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          // Stats Row
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -362,7 +351,6 @@ class HubScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          // Action Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -388,7 +376,6 @@ class HubScreen extends StatelessWidget {
             ],
           ),
           const Divider(height: 40, color: Colors.white12),
-          // Videos Grid Placeholder
           const Expanded(
             child: Center(
               child: Text(
@@ -420,3 +407,47 @@ class _StatItem extends StatelessWidget {
     );
   }
 }
+
+// FULL SETTINGS AND PRIVACY SCREEN
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text('Settings and privacy', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      ),
+      body: ListView(
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text('Account', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 13)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.person_outline_rounded, color: Colors.white),
+            title: const Text('Account management', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.lock_outline_rounded, color: Colors.white),
+            title: const Text('Privacy & Security', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+          const Divider(color: Colors.white12),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text('Content & Display', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 13)),
+          ),
+          ListTile(
+            leading: const Icon(Icons.notifications_none_rounded, color: Colors.white),
+            title: const Text('Notifications', style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: cons
