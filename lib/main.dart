@@ -247,7 +247,7 @@ class HubScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -446,4 +446,4 @@ class SettingsScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.dark_mode_outlined, color: Colors.white),
-            title: const Text('Dark Mode & Theme', style: TextStyle(color: Colors.w
+            title: const Text('Dark Mode & Theme', style: TextStyle(color: Colo
