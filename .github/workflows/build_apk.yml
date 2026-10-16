@@ -27,12 +27,14 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: ./netflip
 
       - name: Build APK
         run: flutter build apk --release
+        working-directory: ./netflip
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: netflip-vip-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: netflip/build/app/outputs/flutter-apk/app-release.apk
