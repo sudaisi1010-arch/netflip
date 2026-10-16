@@ -80,8 +80,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedTopTab = 3; // Defaults to 'Flips'
+
+  final List<String> _tabNames = ['Streams', 'Circle', 'Pulse', 'Flips'];
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +101,10 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildTopTab('Streams', Icons.live_tv_rounded, false),
-              _buildTopTab('Circle', Icons.people_alt_rounded, false),
-              _buildTopTab('Pulse', Icons.person_add_alt_1_rounded, false),
-              _buildTopTab('Flips', Icons.local_fire_department_rounded, true),
+              _buildTopTab(0, 'Streams', Icons.live_tv_rounded),
+              _buildTopTab(1, 'Circle', Icons.people_alt_rounded),
+              _buildTopTab(2, 'Pulse', Icons.person_add_alt_1_rounded),
+              _buildTopTab(3, 'Flips', Icons.local_fire_department_rounded),
               IconButton(
                 icon: const Icon(Icons.search_rounded, color: Colors.white),
                 onPressed: () {},
@@ -110,18 +119,15 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             children: [
               _buildAddStoryAvatar(),
-              _buildLiveAvatar('baristatimo'),
-              _buildStoryAvatar('KASANA'),
-              _buildStoryAvatar('Dr Hilary'),
             ],
           ),
         ),
         const Divider(color: Colors.white12, height: 1),
-        const Expanded(
+        Expanded(
           child: Center(
             child: Text(
-              'Vertical Short Video Feed Ready',
-              style: TextStyle(color: Colors.white70, fontSize: 16),
+              '${_tabNames[_selectedTopTab]} Feed Ready',
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
             ),
           ),
         ),
@@ -129,46 +135,58 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  static Widget _buildTopTab(String title, IconData iconData, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            Icon(iconData, size: 16, color: isSelected ? Colors.white : Colors.white60),
-            const SizedBox(width: 3),
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected ? Colors.white : Colors.white60,
-                fontSize: 14,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+  Widget _buildTopTab(int index, String title, IconData iconData) {
+    final isSelected = _selectedTopTab == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedTopTab = index;
+        });
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(iconData, size: 16, color: isSelected ? Colors.white : Colors.white60),
+              const SizedBox(width: 3),
+              Text(
+                title,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.white60,
+                  fontSize: 14,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        if (isSelected)
+            ],
+          ),
+          const SizedBox(height: 4),
           Container(
             height: 3,
             width: 20,
             decoration: BoxDecoration(
-              color: Colors.deepPurpleAccent,
+              color: isSelected ? Colors.deepPurpleAccent : Colors.transparent,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 
-  static Widget _buildAddStoryAvatar() {
+  Widget _buildAddStoryAvatar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
           Stack(
             children: [
-              const CircleAvatar(radius: 26, backgroundColor: Colors.blueGrey, child: Icon(Icons.person, color: Colors.white, size: 28)),
+              const CircleAvatar(
+                radius: 26,
+                backgroundColor: Colors.blueGrey,
+                child: Icon(Icons.person, color: Colors.white, size: 28),
+              ),
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -186,50 +204,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-  static Widget _buildLiveAvatar(String username) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: [
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.pinkAccent, width: 2)),
-                child: const CircleAvatar(radius: 24, backgroundColor: Colors.grey, child: Icon(Icons.person, color: Colors.white)),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                decoration: BoxDecoration(color: Colors.pink, borderRadius: BorderRadius.circular(6)),
-                child: const Text('LIVE', style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(username, style: const TextStyle(color: Colors.white, fontSize: 11)),
-        ],
-      ),
-    );
-  }
-
-  static Widget _buildStoryAvatar(String username) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.cyan, width: 2)),
-            child: const CircleAvatar(radius: 24, backgroundColor: Colors.grey, child: Icon(Icons.person, color: Colors.white)),
-          ),
-          const SizedBox(height: 4),
-          Text(username, style: const TextStyle(color: Colors.white, fontSize: 11)),
-        ],
-      ),
-    );
-  }
 }
 
 class HubScreen extends StatelessWidget {
@@ -238,70 +212,76 @@ class HubScreen extends StatelessWidget {
   void _showNetFlipMenu(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: const Color(0xFF1E293B),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text('Assets', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
-              ),
-              ListTile(
-                leading: const Icon(Icons.account_balance_wallet_rounded, color: Colors.white),
-                title: const Text('Balance & Earnings', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.star_rounded, color: Colors.amber),
-                title: const Text('NetFlip VIP Status', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () => Navigator.pop(context),
-              ),
-              const Divider(color: Colors.white12),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text('Personal tools', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
-              ),
-              ListTile(
-                leading: const Icon(Icons.download_rounded, color: Colors.white),
-                title: const Text('Offline Videos', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.qr_code_2_rounded, color: Colors.white),
-                title: const Text('Your QR Code', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () => Navigator.pop(context),
-              ),
-              const Divider(color: Colors.white12),
-              ListTile(
-                leading: const Icon(Icons.video_settings_rounded, color: Colors.deepPurpleAccent),
-                title: const Text('NetFlip Studio', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings_rounded, color: Colors.white),
-                title: const Text('Settings and privacy', style: TextStyle(color: Colors.white)),
-                trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SettingsScreen()),
-                  );
-                },
-              ),
-            ],
+          padding: EdgeInsets.only(
+            top: 16.0,
+            bottom: MediaQuery.of(context).padding.bottom + 16.0,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text('Assets', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.account_balance_wallet_rounded, color: Colors.white),
+                  title: const Text('Balance & Earnings', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.star_rounded, color: Colors.amber),
+                  title: const Text('NetFlip VIP Status', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => Navigator.pop(context),
+                ),
+                const Divider(color: Colors.white12),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text('Personal tools', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold)),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.download_rounded, color: Colors.white),
+                  title: const Text('Offline Videos', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.qr_code_2_rounded, color: Colors.white),
+                  title: const Text('Your QR Code', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => Navigator.pop(context),
+                ),
+                const Divider(color: Colors.white12),
+                ListTile(
+                  leading: const Icon(Icons.video_settings_rounded, color: Colors.deepPurpleAccent),
+                  title: const Text('NetFlip Studio', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.settings_rounded, color: Colors.white),
+                  title: const Text('Settings and privacy', style: TextStyle(color: Colors.white)),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -339,11 +319,11 @@ class HubScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              _StatItem(count: '14', label: 'Following'),
+              _StatItem(count: '0', label: 'Following'),
               SizedBox(width: 24),
-              _StatItem(count: '128', label: 'Followers'),
+              _StatItem(count: '0', label: 'Followers'),
               SizedBox(width: 24),
-              _StatItem(count: '340', label: 'Likes'),
+              _StatItem(count: '0', label: 'Likes'),
             ],
           ),
           const SizedBox(height: 24),
