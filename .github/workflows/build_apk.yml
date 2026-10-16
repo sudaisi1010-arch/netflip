@@ -25,16 +25,18 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Install Dependencies
-        run: flutter pub get
-        working-directory: ./netflip
-
-      - name: Build APK
-        run: flutter build apk --release
-        working-directory: ./netflip
+      - name: Find Project and Build APK
+        run: |
+          # Find directory containing pubspec.yaml automatically
+          PUBSPEC_PATH=$(find . -name "pubspec.yaml" | head -n 1)
+          PROJECT_DIR=$(dirname "$PUBSPEC_PATH")
+          echo "Found Flutter project at: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
+          flutter pub get
+          flutter build apk --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: netflip-vip-apk
-          path: netflip/build/app/outputs/flutter-apk/app-release.apk
+          path: '**/build/app/outputs/flutter-apk/app-release.apk'
