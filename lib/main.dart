@@ -363,6 +363,7 @@ class CreatePostScreen extends StatelessWidget {
     );
   }
 }
+
 // ==================== INBOX SCREEN ====================
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
@@ -501,7 +502,8 @@ class EarningsWalletScreen extends StatelessWidget {
               ),
               child: Column(
                 children: const [
-                  Text('Total Earnings', style: TextStyle(color: Colors.white60, fontSize: 14)),
+                 Text('Total Earnings', style: TextStyle(color: Colors.white60, fontSize: 14)),
+
                   SizedBox(height: 8),
                   Text('\$0.00', style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold)),
                 ],
@@ -780,7 +782,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => _showInfoDialog(context, 'Notifications', 'Customize push notification preferences for Likes, Comments, and Streams.'),
           ),
           ListTile(
-      leading: const Icon(Icons.dark_mode_outlined, color: Colors.white),
+            leading: const Icon(Icons.dark_mode_outlined, color: Colors.white),
             title: const Text('Dark Mode & Theme', style: TextStyle(color: Colors.white)),
             trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () => _showInfoDialog(context, 'Dark Mode & Theme', 'NetFlip is set to Dark Theme by default.'),
@@ -805,27 +807,3 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-          const Divider(color: Colors.white12),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text('Support & About', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 13)),
-          ),
-          ListTile(
-            leading: const Icon(Icons.help_outline_rounded, color: Colors.white),
-            title: const Text('Help Center', style: TextStyle(color: Colors.white)),
-            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-            onTap: () => _showInfoDialog(context, 'Help Center', 'Need help? Contact support or read the NetFlip FAQ.'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.info_outline_rounded, color: Colors.white),
-            title: const Text('About NetFlip', style: TextStyle(color: Colors.white)),
-            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-            onTap: () => _showInfoDialog(context, 'About NetFlip', 'NetFlip v1.0.0 — The ultimate video sharing platform.'),
-          ),
-        ],
-      ),
-    );
-  }
-
